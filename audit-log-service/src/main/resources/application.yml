@@ -1,0 +1,8 @@
+server:
+  port: 7079
+
+spring:
+  application:
+    name: audit-log-service
+  config:
+    import: "optional:configserver:http://localhost:8888"

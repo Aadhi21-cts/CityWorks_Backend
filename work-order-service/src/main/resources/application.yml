@@ -1,0 +1,8 @@
+server:
+  port: 7078
+
+spring:
+  application:
+    name: work-order-service
+  config:
+    import: "optional:configserver:http://localhost:8888"
