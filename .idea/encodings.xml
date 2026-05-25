@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/ApiGateway/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/AssetInspection/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/AssetService/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/CompletionEvidence/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ConfigServer/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/IamService/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/MaintenanceRecord/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ServiceRegistry/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Task-Service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/audit-log-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/service-request-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/work-order-service/src/main/java" charset="UTF-8" />
+  </component>
+</project>
