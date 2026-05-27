@@ -13,4 +13,5 @@ public interface WorkOrderRepository extends JpaRepository<WorkOrder, Long> {
     List<WorkOrder> findByAssignedWorkerId(Long workerId);
 
     Optional<WorkOrder> findByRequestId(Long requestId);
+    
 }

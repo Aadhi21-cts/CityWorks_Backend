@@ -60,21 +60,21 @@ public class GlobalExceptionHandler {
 
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<Map<String, Object>> handleMethodArgumentNotValidException(
-			MethodArgumentNotValidException ex) {
+	        MethodArgumentNotValidException ex) {
 
-		Map<String, String> fieldErrors = new HashMap<>();
+	    Map<String, String> fieldErrors = new HashMap<>();
 
-		ex.getBindingResult().getFieldErrors().forEach(error -> {
-			fieldErrors.put(error.getField(), error.getDefaultMessage());
-		});
+	    ex.getBindingResult().getFieldErrors().forEach(error -> {
+	        fieldErrors.put(error.getField(), error.getDefaultMessage());
+	    });
 
-		Map<String, Object> response = new HashMap<>();
-		response.put("timestamp", java.time.LocalDateTime.now());
-		response.put("status", HttpStatus.BAD_REQUEST.value());
-		response.put("error", "INVALID_OPERATION");
-		response.put("message", fieldErrors);
+	    Map<String, Object> response = new HashMap<>();
+	    response.put("timestamp", LocalDateTime.now());
+	    response.put("status", HttpStatus.BAD_REQUEST.value());
+	    response.put("error", "VALIDATION_FAILED");
+	    response.put("message", fieldErrors);   
 
-		return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+	    return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
 	}
 	
 	@ExceptionHandler(AccessDeniedException.class)

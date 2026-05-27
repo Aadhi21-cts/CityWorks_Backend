@@ -23,6 +23,7 @@ import com.cts.dto.request.CreateAssetRequestDTO;
 import com.cts.dto.response.AssetResponseDTO;
 import com.cts.service.AssetService;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 
 @RestController
@@ -33,7 +34,7 @@ public class AssetController{
 	@Autowired
 	AssetService assetService;
 	
-	@PreAuthorize("hasRole('ADMIN') or hasRole('SUPERVISOR')")
+	@PreAuthorize("hasRole('ADMIN') or hasRole('SUPERVISOR') or hasRole('CITIZEN')")
 	@GetMapping
 	public ResponseEntity<?> getAllAssets(){
 		List<AssetResponseDTO> assets = assetService.getAllAssets();
@@ -59,7 +60,7 @@ public class AssetController{
 	
 	@PreAuthorize(("hasRole('ADMIN')"))
 	@PostMapping
-	public ResponseEntity<?> addAssets(@RequestBody CreateAssetRequestDTO assets){
+	public ResponseEntity<?> addAssets(@RequestBody @Valid CreateAssetRequestDTO assets){
 		AssetResponseDTO asset = assetService.addAssets(assets);
 		return ResponseEntity.ok(ApiResponse.<AssetResponseDTO>builder()
 				.status("SUCCESS")
@@ -94,7 +95,7 @@ public class AssetController{
 	
 	@PreAuthorize(("hasRole('ADMIN')"))
 	@PutMapping("/{assetId}")
-	public ResponseEntity<?> updateAssetById(@PathVariable @Positive(message = "id must be Positive") Long assetId, @RequestBody CreateAssetRequestDTO asset) {
+	public ResponseEntity<?> updateAssetById(@PathVariable @Positive(message = "id must be Positive") Long assetId, @RequestBody @Valid CreateAssetRequestDTO asset) {
 		AssetResponseDTO assets = assetService.updateAssetById(assetId, asset);
 		return ResponseEntity.ok(ApiResponse.<AssetResponseDTO>builder()
 				.status("SUCCESS")

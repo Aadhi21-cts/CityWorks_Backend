@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.cts.api.ApiResponse;
 
+import jakarta.validation.ConstraintViolationException;
+
 @RestControllerAdvice
 public class GlobalExceptionHandler {
     @ExceptionHandler(ResourceNotFoundException.class)
@@ -28,21 +30,35 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public  ResponseEntity<ApiResponse<Map<String, String>>> handleValidationException(MethodArgumentNotValidException manv){
-        Map<String, String> fieldErrors = new HashMap<>();
+	public ResponseEntity<Map<String, Object>> handleMethodArgumentNotValidException(
+			MethodArgumentNotValidException ex) {
 
-        manv.getBindingResult()
-                .getFieldErrors()
-                .forEach(error -> fieldErrors.put(error.getField(), error.getDefaultMessage())
-                );
+		Map<String, String> fieldErrors = new HashMap<>();
 
-        return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(ApiResponse.<Map<String, String>>builder()
-                        .status("ERROR")
-                        .message("Validation failed")
-                        .data(fieldErrors)
-                        .build());
-    }
+		ex.getBindingResult().getFieldErrors().forEach(error -> {
+			fieldErrors.put(error.getField(), error.getDefaultMessage());
+		});
+
+		Map<String, Object> response = new HashMap<>();
+		response.put("timestamp", java.time.LocalDateTime.now());
+		response.put("status", HttpStatus.BAD_REQUEST.value());
+		response.put("error", "INVALID_OPERATION");
+		response.put("message", fieldErrors);
+
+		return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+	}
+    
+    @ExceptionHandler(ConstraintViolationException.class)
+	public ResponseEntity<Map<String, Object>> handleConstraintVoilation(ConstraintViolationException ex) {
+
+		Map<String, Object> response = new HashMap<>();
+		response.put("timestamp", java.time.LocalDateTime.now());
+		response.put("status", HttpStatus.BAD_REQUEST.value());
+		response.put("error", "INVALID_OPERATION");
+		response.put("message", ex.getMessage());
+
+		return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+	}
     
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<ApiResponse<Map<String,String>>> handleAccessDenied(AccessDeniedException ex) {

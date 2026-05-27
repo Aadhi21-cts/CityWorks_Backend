@@ -76,8 +76,8 @@ public class AssetServiceImpl implements AssetService {
 		updates.forEach((key,values) -> {
 			switch(key) 
 			{
-				case "condition": oldAsset.setCondition((AssetCondition) values); break;
-				case "status": oldAsset.setStatus((AssetStatus) values); break;
+				case "condition": oldAsset.setCondition(AssetCondition.valueOf(values.toString())); break;
+				case "status": oldAsset.setStatus(AssetStatus.valueOf(values.toString())); break;
 			}
 		});
 		

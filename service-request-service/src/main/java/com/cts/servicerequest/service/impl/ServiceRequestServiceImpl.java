@@ -113,5 +113,12 @@ public class ServiceRequestServiceImpl implements ServiceRequestService {
         requestRepository.delete(entity);
     }
 
+	@Override
+	public void updateRequestStatusById(Long requestId, ServiceRequestStatus status) {
+		ServiceRequest request = requestRepository.findById(requestId).orElseThrow(() -> new ResourceNotFoundException("Service Request with id not Found "+requestId));
+		request.setStatus(status);
+		requestRepository.save(request);
+	}
+
     
 }

@@ -118,6 +118,12 @@ public class WorkOrderServiceImpl {
                 "Unable to create work order: Service Request Service is currently "
                 + "unavailable. Please try again later.");
     }
+    
+    public WorkOrderResponseDTO getWorkOrderByRequestId(Long requestId) {
+    	WorkOrder order = workOrderRepository.findByRequestId(requestId).orElseThrow(() -> new ResourceNotFoundException("Not Found"));
+    	
+    	return WorkOrderMapper.toResponse(order);
+    }
 
     // ─── ASSIGN WORKER ───────────────────────────────────────────────────────
 

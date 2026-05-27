@@ -34,9 +34,9 @@ public class AuthController {
 	}
 
 	@PostMapping("/register")
-	public ResponseEntity<String> register(@RequestBody RegisterRequest request) {
+	public ResponseEntity<Map<String,String>> register(@RequestBody RegisterRequest request) {
 		authService.register(request);
-		return ResponseEntity.ok("User registered successfully");
+		return ResponseEntity.ok(Map.of("message","User registered successfully"));
 	}
 
 	@PreAuthorize("hasRole('ADMIN')")
