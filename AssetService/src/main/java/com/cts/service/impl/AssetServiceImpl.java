@@ -1,11 +1,9 @@
 package com.cts.service.impl;
 
 import java.util.List;
-
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cts.audit.Auditable;
@@ -19,11 +17,14 @@ import com.cts.mapper.AssetMapper;
 import com.cts.repository.AssetRepository;
 import com.cts.service.AssetService;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class AssetServiceImpl implements AssetService {
 	
-	@Autowired
-	AssetRepository assetRepository;
+	
+	private final AssetRepository assetRepository;
 
 	@Auditable( action = "CREATE",
 			resourceType = "Asset"

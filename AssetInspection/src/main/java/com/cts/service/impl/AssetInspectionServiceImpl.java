@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.cts.aspect.audit.Auditable;
@@ -16,11 +14,13 @@ import com.cts.dto.response.AssetInspectionResponseDTO;
 import com.cts.entity.AssetInspection;
 import com.cts.enums.InspectionStatus;
 import com.cts.exception.ResourceNotFoundException;
+import com.cts.exception.ServiceUnavailableException;
 import com.cts.mapper.AssetInspectionMapper;
 import com.cts.repository.AssetInspectionRepository;
 import com.cts.service.ApiClient;
 import com.cts.service.AssetInspectionService;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.retry.annotation.Retry;
 import lombok.RequiredArgsConstructor;
 
@@ -31,10 +31,10 @@ public class AssetInspectionServiceImpl implements AssetInspectionService {
 	private final AssetInspectionRepository assetInspectionRepository;
 	private final AssetInspectionMapper inspectionMapper;
 	private final ApiClient apiClient;
-	private final Logger logger = LoggerFactory.getLogger(AssetInspectionServiceImpl.class);
 
 	@Auditable( action = "CREATE", resourceType = "Asset Inspection" )
-	@Retry(name = "AssetInspection-Service", fallbackMethod = "getDefaultAssetDetails")
+	@CircuitBreaker(name = "AssetInspection-Service", fallbackMethod = "getDefaultAssetDetails")
+	@Retry(name = "AssetInspection-Service")
 	@Override
 	public AssetInspectionResponseDTO createAssetInspection(CreateAssetInspectionRequestDTO assetInspection) {
 		
@@ -120,8 +120,7 @@ public class AssetInspectionServiceImpl implements AssetInspectionService {
 	}
 	
 	public AssetInspectionResponseDTO getDefaultAssetDetails(CreateAssetInspectionRequestDTO assetInspection, Throwable exception) {
-		logger.info("Method Called");
-		throw new ResourceNotFoundException("Asset Not found id : "+assetInspection.getAssetId()); 
+		throw new ServiceUnavailableException("Asset Service Unavailable");
 	}
 
 }

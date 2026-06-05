@@ -3,7 +3,6 @@ package com.cts.controller;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
@@ -24,14 +23,15 @@ import com.cts.service.MaintenanceRecordService;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/maintenance_records")
+@RequiredArgsConstructor
 @Validated
 public class MaintenanceRecordController {
 	
-	@Autowired
-	private MaintenanceRecordService maintenanceRecordService;
+	private final MaintenanceRecordService maintenanceRecordService;
 	
 	@PreAuthorize("hasRole('SUPERVISOR')")
 	@PostMapping

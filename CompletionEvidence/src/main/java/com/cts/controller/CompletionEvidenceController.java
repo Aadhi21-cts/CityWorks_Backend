@@ -2,8 +2,6 @@ package com.cts.controller;
 
 import java.util.List;
 
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
@@ -24,14 +22,15 @@ import com.cts.enums.EvidenceStatus;
 import com.cts.service.CompletionEvidenceService;
 
 import jakarta.validation.constraints.Positive;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/completion_evidence")
+@RequiredArgsConstructor
 @Validated
 public class CompletionEvidenceController {
 	
-	@Autowired
-	private CompletionEvidenceService evidenceService;
+	private final CompletionEvidenceService evidenceService;
 	
 	@PreAuthorize("hasRole('WORKER')")
 	@PostMapping

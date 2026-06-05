@@ -32,7 +32,6 @@ public class GlobalExceptionHandler {
 		return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
 	}
 
-	// 👇 ADD THIS TO YOUR EXISTING GlobalExceptionHandler.java 👇
 	@ExceptionHandler(ResourceNotFoundException.class)
 	public ResponseEntity<Map<String, Object>> handleResourceNotFound(ResourceNotFoundException ex) {
 
@@ -85,4 +84,16 @@ public class GlobalExceptionHandler {
                 		.message("Access denied: you do not have permission to perform this action")
                 		.build());
     }
+	
+	@ExceptionHandler(ServiceUnavailableException.class)
+	public ResponseEntity<Map<String, Object>> handleServiceUnavailable(ServiceUnavailableException ex) {
+
+		Map<String, Object> response = new HashMap<>();
+		response.put("timestamp", java.time.LocalDateTime.now());
+		response.put("status", HttpStatus.SERVICE_UNAVAILABLE.value());
+		response.put("error", "SERVICE_UNAVAILABLE");
+		response.put("message", ex.getMessage());
+
+		return new ResponseEntity<>(response, HttpStatus.SERVICE_UNAVAILABLE);
+	}
 }

@@ -3,7 +3,6 @@ package com.cts.controller;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 //import org.springframework.security.access.prepost.PreAuthorize;
@@ -25,14 +24,16 @@ import com.cts.service.AssetService;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/assets")
 @Validated
+@RequiredArgsConstructor
 public class AssetController{
 	
-	@Autowired
-	AssetService assetService;
+	
+	private final AssetService assetService;
 	
 	@PreAuthorize("hasRole('ADMIN') or hasRole('SUPERVISOR') or hasRole('CITIZEN')")
 	@GetMapping

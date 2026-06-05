@@ -36,6 +36,7 @@ public class CreateAssetInspectionRequestDTO {
 	@NotNull(message = "Status should not be null")
 	private InspectionStatus status;
 	
+	@NotNull(message = "asset id should not be null")
 	private Long assetId;
 
 }

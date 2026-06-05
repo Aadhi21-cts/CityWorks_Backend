@@ -33,19 +33,19 @@ public class SecurityConfig {
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
 
         return http
-                // ✅ Enable CORS (Reactive way)
+                //  Enable CORS (Reactive way)
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
 
-                // ✅ Disable CSRF
+                //  Disable CSRF
                 .csrf(ServerHttpSecurity.CsrfSpec::disable)
 
-                // ✅ Authorization rules
+                //  Authorization rules
                 .authorizeExchange(exchanges -> exchanges
 
-                        // ✅ VERY IMPORTANT: Allow preflight requests
+                        //  VERY IMPORTANT: Allow preflight requests
                         .pathMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
-                        // ✅ Public endpoints
+                        //  Public endpoints
                         .pathMatchers(
                                 "/api/auth/**",
                                 "/swagger-ui/index.html",
@@ -58,20 +58,20 @@ public class SecurityConfig {
                                 "/api/notifications/**"
                         ).permitAll()
 
-                        // ✅ Example public POST
+                        //  Example public POST
                         .pathMatchers(HttpMethod.POST, "/api/audit-logs").permitAll()
 
-                        // ✅ All others secured
+                        //  All others secured
                         .anyExchange().authenticated()
                 )
 
-                // ✅ JWT Filter
+                //  JWT Filter
                 .addFilterAt(jwtAuthenticationFilter, SecurityWebFiltersOrder.AUTHENTICATION)
 
                 .build();
     }
 
-    // ✅ ✅ ✅ REACTIVE CORS CONFIG (CRITICAL FIX)
+    // REACTIVE CORS CONFIG
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
@@ -87,7 +87,7 @@ public class SecurityConfig {
         return source;
     }
 
-    // ✅ Password encoder
+    //  Password encoder
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
