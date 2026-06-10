@@ -42,7 +42,7 @@ public class SecurityConfig {
                 //  Authorization rules
                 .authorizeExchange(exchanges -> exchanges
 
-                        //  VERY IMPORTANT: Allow preflight requests
+                        // Allow preflight requests
                         .pathMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
                         //  Public endpoints
@@ -71,9 +71,8 @@ public class SecurityConfig {
                 .build();
     }
 
-    // REACTIVE CORS CONFIG
     @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
+    CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
 
         config.setAllowCredentials(true);

@@ -97,8 +97,8 @@ public class AssetInspectionServiceImpl implements AssetInspectionService {
 		
 		field.forEach((key,value) -> {
 			switch(key) {
-				case "status": inspection.setStatus(InspectionStatus.valueOf(value.toString())); break;
-				case "performedAt": inspection.setPerformedAt(LocalDateTime.parse(value.toString()));
+				case "status": if(value != null) inspection.setStatus(InspectionStatus.valueOf(value.toString())); break;
+				case "performedAt": if(value != null) inspection.setPerformedAt(LocalDateTime.parse(value.toString()));
 			}
 		});
 		

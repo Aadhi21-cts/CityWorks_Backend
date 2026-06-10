@@ -56,7 +56,7 @@ public class MaintenanceRecordServiceImpl implements MaintenanceRecordService {
 		updates.forEach((key, values) -> {
 			switch (key) {
 			case "status":
-				record.setStatus(MaintenanceStatus.valueOf(values.toString()));
+				if(values != null) record.setStatus(MaintenanceStatus.valueOf(values.toString()));
 				break;
 			}
 		});

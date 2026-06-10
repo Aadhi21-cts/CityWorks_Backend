@@ -6,6 +6,7 @@ import java.util.Date;
 import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 
@@ -29,6 +30,11 @@ public class JwtUtil {
 	}
 
 	public boolean isTokenValid(String token) {
-		return !extractClaims(token).getExpiration().before(new Date());
+		try {
+			return !extractClaims(token).getExpiration().before(new Date());
+		}
+		catch(JwtException e) {
+			return false;
+		}
 	}
 }
